@@ -1,0 +1,19 @@
+/*login*/
+
+.login{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form{
+    padding: 20px;
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+}
+
+.login-register{
+    display: flex;
+    justify-content: space-between;
+}

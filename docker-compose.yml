@@ -1,0 +1,50 @@
+services:
+  app:
+    build: .
+    ports:
+      - ":3000"
+    depends_on:
+      - mongodb
+      - redis
+    deploy:
+      replicas: 3
+    networks:
+      - webnet
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d
+    networks:
+      - webnet
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - webnet
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - webnet
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  webnet:

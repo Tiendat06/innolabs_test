@@ -1,0 +1,602 @@
+openapi: 3.0.0
+info:
+  title: Innolabs test api doc
+  version: 1.0.0
+  description: This is an API doc for an authorization system made with Express JS and documented with Swagger
+  contact:
+    name: Tạ Tiến Đạt
+    url: https://www.linkedin.com/in/ta-dat-83bba8266/
+    email: tadat290903@gmail.com
+servers:
+  - url: 'http://localhost'
+paths:
+  /log/login:
+    post:
+      summary: User login (Administrator, Editor, Reader)
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "tiendat79197@gmail.com"
+                password:
+                  type: string
+                  example: "1234567890"
+      responses:
+        '200':
+          description: Login successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  msg:
+                    type: string
+                    example: 'Login successfully !'
+        '400':
+          description: Login failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  msg:
+                    type: string
+                    example: 'Login failed !'
+  /log/register:
+    post:
+      summary: User registration (Administrator, Editor, Reader)
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                  example: "Tạ Tiến Đạt"
+                phone:
+                  type: string
+                  example: "0356779197"
+                email:
+                  type: string
+                  example: "ryannguyen1905@gmail.com"
+                password:
+                  type: string
+                  example: "123456789"
+      responses:
+        '201':
+          description: Register successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  msg:
+                    type: string
+                    example: 'Register successfully !'
+        '400':
+          description: Register failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  msg:
+                    type: string
+                    example: 'Register failed !'
+  /log/forgot-password:
+    post:
+      summary: User forgot password (Administrator, Editor, Reader)
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "tadat290903@gmail.com"
+      responses:
+        '200':
+          description: Send mail successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  msg:
+                    type: string
+                    example: 'Please check your email !'
+        '400':
+          description: Send mail failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  msg:
+                    type: string
+                    example: 'Send mail failed !'
+
+  /:
+    get:
+      summary: Get Articles (Administrator, Editor, Reader)
+      tags:
+        - Article
+      responses:
+        '200':
+          description: Load the articles
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Article'
+                  msg:
+                    type: string
+                    example: 'Load articles successfully !'
+        '400':
+          description: Load articles failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  msg:
+                    type: string
+                    example: 'Load article failed !'
+  /add:
+    post:
+      summary: Add a new article (Administrator, Editor)
+      tags:
+        - Article
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - content
+                - author_name
+              properties:
+                title:
+                  type: string
+                  example: "New Article Title"
+                content:
+                  type: string
+                  example: "This is the content of the new article."
+                author_name:
+                  type: string
+                  example: "John Doe"
+                deleted:
+                  type: boolean
+                  example: false
+                createdAt:
+                  type: string
+                  format: date-time
+                  example: "2024-11-20T11:19:30.607Z"
+      responses:
+        '200':
+          description: Article added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Article'
+                  msg:
+                    type: string
+                    example: 'Article added successfully!'
+
+        '400':
+          description: Invalid input or failed to add article
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  msg:
+                    type: string
+                    example: 'Failed to add article. Please check the input.'
+  /edit/{id}:
+    put:
+      summary: Update article (Administrator, Editor)
+      tags:
+        - Article
+      parameters:
+        - in: path
+          name: id
+          description: Article Id
+          required: true
+          schema:
+            type: string
+            example: '673c74429822a9c1b53ad8c2'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - content
+                - author_name
+              properties:
+                title:
+                  type: string
+                  example: 'No Family'
+                content:
+                  type: string
+                  example: 'Maria is a poor children in Western...'
+                author_name:
+                  type: string
+                  example: Jacky Style
+      responses:
+        '200':
+          description: Edit article successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Article'
+                  msg:
+                    type: string
+                    example: 'Edit article successfully'
+        '400':
+          description: Edit article failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  msg:
+                    type: string
+                    example: 'Edit article failed !'
+  /delete/{id}:
+    delete:
+      summary: Delete article (Administrator, Editor)
+      tags:
+        - Article
+      parameters:
+        - in: path
+          name: id
+          description: Article Id
+          required: true
+          schema:
+            type: string
+            example: '673c74429822a9c1b53ad8c2'
+      responses:
+        '200':
+          description: Delete article successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  msg:
+                    type: string
+                    example: 'Delete article successfully'
+        '400':
+          description: Delete article failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  msg:
+                    type: string
+                    example: 'Delete article failed'
+
+  /user:
+    get:
+      summary: 'Load user (Administrator)'
+      tags:
+        - User
+      responses:
+        '200':
+          description: Load user successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/User'
+                  msg:
+                    type: string
+                    example: 'Load user successfully'
+        '400':
+          description: Load user failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  msg:
+                    type: string
+                    example: 'Load user failed'
+  /user/{id}/change-role:
+    patch:
+      summary: Change user role (Administrator)
+      tags:
+        - User
+      parameters:
+        - in: path
+          description: User Id
+          name: id
+          required: true
+          schema:
+            type: string
+            example: 673c73dbd31bb3413bfd9ddd
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role_name:
+                  type: string
+                  example: editor
+      responses:
+        '200':
+          description: Change role successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/User'
+                  msg:
+                    type: string
+                    example: Change role successfully !
+        '400':
+          description: Change role failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  msg:
+                    type: string
+                    example: Change role failed !
+  /user/{id}:
+    put:
+      summary: Update user (Administrator)
+      tags:
+        - User
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: User Id
+          schema:
+            type: string
+            example: 673c73dbd31bb3413bfd9ddd
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                  example: 'Jake Johnson'
+                phone:
+                  type: string
+                  example: '0356779197'
+                email:
+                  type: string
+                  example: tadat290903@gmail.com
+                password:
+                  type: string
+                  example: 123456789
+      responses:
+        '200':
+          description: Update user successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/User'
+                  msg:
+                    type: string
+                    example: Update user successfully !
+        '400':
+          description: Update user failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  msg:
+                    type: string
+                    example: Update user failed !
+    delete:
+      summary: Delete User (Administrator)
+      tags:
+        - User
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: User Id
+          schema:
+            type: string
+            example: 673c73dbd31bb3413bfd9ddd
+      requestBody:
+        required: false
+        content:
+          application/json:
+      responses:
+        '200':
+          description: Delete user successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  msg:
+                    type: string
+                    example: Delete user successfully !
+        '400':
+          description: Delete user failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  msg:
+                    type: string
+                    example: Delete user failed !
+components:
+  schemas:
+    Article:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "673c74429822a9c1b53ad8c2"
+        content:
+          type: string
+          example: "Maria is a poor children in Western..."
+        title:
+          type: string
+          example: "No Family"
+        author_name:
+          type: string
+          example: "Hector Mason"
+        deleted:
+          type: boolean
+          example: false
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-11-19T11:19:30.607Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2024-11-19T11:53:30.832Z"
+        __v:
+          type: integer
+          example: 0
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "673c73dbd31bb3413bfd9ddd"
+        fullName:
+          type: string
+          example: "Jake Jason"
+        email:
+          type: string
+          example: "tadat290903@gmail.com"
+        phone:
+          type: string
+          example: "0356779197"
+        deleted:
+          type: boolean
+          example: false
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-11-19T11:19:30.607Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2024-11-19T11:53:30.832Z"
+        __v:
+          type: integer
+          example: 0
