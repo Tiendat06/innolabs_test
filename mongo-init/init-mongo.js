@@ -4,7 +4,7 @@ db.createCollection('account')
 db.account.insertMany([{
     "_id": ObjectId("673c73dbd31bb3413bfd9de0"),
     "user_id": ObjectId("673c73dbd31bb3413bfd9ddd"),
-    "role_id": ObjectId("673c68bf62bc00c2c141d293"),
+    "role_id": ObjectId("673c68b262bc00c2c141d292"),
     "password": "$2b$10$Tbm34ZCMY3if3tpwjWCrtuH0u7qeFTnrk3lUFzbSaY/EBSzt3OSwG",
     "code_forgot_password": "",
     "deleted": false,
@@ -22,7 +22,18 @@ db.account.insertMany([{
         "createdAt": new Date("2024-11-19T11:24:13.012Z"),
         "updatedAt": new Date("2024-11-19T11:24:13.013Z"),
         "__v": 0
-    }])
+    },
+    {
+        "_id": ObjectId("673ecb7538b2cc9f90664b5d"),
+        "user_id": ObjectId("673ecb7538b2cc9f90664b5a"),
+        "role_id": ObjectId("673c68bf62bc00c2c141d293"),
+        "password": "$2b$10$Vun3KqYxQbxzzze3Ki2e2.Mrc1Whbr1pT3V9YVrFsvFfTfEjnRbIq",
+        "deleted": false,
+        "createdAt": new Date("2024-11-21T05:56:05.456Z"),
+        "updatedAt":new Date("2024-11-21T05:56:05.456Z"),
+        "__v": 0
+    }
+])
 
 
 db.createCollection('user')
@@ -45,7 +56,18 @@ db.user.insertMany([{
         "createdAt": new Date("2024-11-19T11:24:12.928Z"),
         "updatedAt": new Date("2024-11-19T11:24:12.928Z"),
         "__v": 0
-    }])
+    },
+    {
+        "_id": ObjectId("673ecb7538b2cc9f90664b5a"),
+        "fullName": "Bob Johnson",
+        "email": "ryannguyen1905@gmail.com",
+        "phone": "0356779197",
+        "deleted": false,
+        "createdAt":new Date("2024-11-21T05:56:05.310Z"),
+        "updatedAt": new Date("2024-11-21T05:56:05.311Z"),
+        "__v": 0
+    }
+])
 
 
 db.createCollection('role')

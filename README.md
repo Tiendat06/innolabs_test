@@ -2,8 +2,12 @@
 email: tiendat79197@gmail.com  
 password: 1234567890
 
-**Account reader**  
+**Account editor**  
 email: tadat290903@gmail.com  
+password: 123456789
+
+**Account reader**  
+email: ryannguyen1905@gmail.com  
 password: 123456789
 
 **How to run:**  
