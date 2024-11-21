@@ -47,7 +47,7 @@ class LogService {
         const {fullName, password, phone, email} = req.body;
         try {
             const error = req.flash('error');
-            if (error.length === 0 && error === ''){
+            if (error.length === 0){
                 const userData = {
                     fullName,
                     email, phone
@@ -75,15 +75,13 @@ class LogService {
                     msg: 'Register successfully!!',
                 })
             } else{
-                return res.status(400).json({
-                    status: false,
-                    msg: error[0]
-                })
+                console.log(error);
+                throw new Error(error[0])
             }
         } catch (e) {
             return res.status(400).json({
                 status: false,
-                msg: 'Register Failed !!'
+                msg: e.message
             })
         }
 

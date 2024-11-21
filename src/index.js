@@ -14,14 +14,14 @@ const redisStore = require('connect-redis').default;
 const {createClient} = require('redis');
 const os = require("node:os");
 
-const redisClient = createClient({
-    url: `redis://${process.env.REDIS_HOST || 'host.docker.internal'}:${process.env.REDIS_PORT || '6379'}`,
-    socket: {
-        connectTimeout: 5000,
-    },
-});
-
-redisClient.connect().catch(err => console.log(err));
+// const redisClient = createClient({
+//     url: `redis://${process.env.REDIS_HOST || 'host.docker.internal'}:${process.env.REDIS_PORT || '6379'}`,
+//     socket: {
+//         connectTimeout: 5000,
+//     },
+// });
+//
+// redisClient.connect().catch(err => console.log(err));
 
 db.connect().catch(() => console.log('Connect failed !!'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(session({
-    store: new redisStore({client: redisClient}),
+    // store: new redisStore({client: redisClient}),
     secret: '123456',
     resave: false,
     saveUninitialized: true,
