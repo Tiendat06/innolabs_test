@@ -28,6 +28,7 @@ class LogMiddleWare {
 
     forgot_password = async (req, res, next) => {
         const result = validationResult(req);
+        const {email} = req.body;
         let error = '';
         if(!result.isEmpty()){
             let error = result.array()[0].msg;
