@@ -24,7 +24,6 @@ const redisClient = createClient({
 redisClient.connect().catch(err => console.log(err));
 
 db.connect().catch(() => console.log('Connect failed !!'));
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
