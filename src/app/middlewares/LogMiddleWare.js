@@ -31,7 +31,7 @@ class LogMiddleWare {
         const {email} = req.body;
         let error = '';
         if(!result.isEmpty()){
-            let error = result.array()[0].msg;
+            error = result.array()[0].msg;
             req.flash('error', error);
         } else if(!await userRepository.getUserByEmail(email)){
             error = 'Email is not exists';
